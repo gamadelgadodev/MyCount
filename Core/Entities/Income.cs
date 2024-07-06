@@ -1,11 +1,13 @@
 namespace Core.Entities
 {
-    public class Income
+    public class Income : BaseEntity
     {
-        public int id { get; set; }
-        public int IdUser { get; set; }
+        public Account Account { get; set; }
+        public int AccountId { get; set; }
         public decimal Value { get; set; }
         public string Description { get; set; }
-        public int IdType { get; set; }
+        public DateTime Date { get; set; }
+        public IncomeCat IncomeCat { get; set; }
+        public int IncomeCatId { get; set; }
     }
 }

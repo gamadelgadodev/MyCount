@@ -16,7 +16,8 @@ namespace Infrastructure.Data
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<IncomeCat> IncomeCats { get; set; }
         public DbSet<ExpenseCat> ExpenseCats { get; set; }
-        public DbSet<Balance> Balances { get; set; }
+        public DbSet<Recurrent> Recurrents { get; set; }
+        public DbSet<Account> Accounts { get; set; }
 
     }
 }

@@ -1,11 +1,15 @@
 namespace Core.Entities
 {
-    public class Expense
+    public class Expense : BaseEntity
     {
-        public int id { get; set; }
-        public int IdUser { get; set; }
+        public Account Account { get; set; }
+        public int AccountId { get; set; }
+        public ExpenseCat ExpenseCat { get; set; }
+        public int ExpenseCatId { get; set; }
         public decimal Value { get; set; }
         public string Description { get; set; }
-        public int IdType { get; set; }
+        
+        public DateTime Date { get; set; }
+        public bool nessesary { get; set; }
     }
 }
