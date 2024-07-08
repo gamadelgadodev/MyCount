@@ -11,5 +11,6 @@ namespace Core.Entities
         
         public DateTime Date { get; set; }
         public bool nessesary { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

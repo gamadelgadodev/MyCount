@@ -9,5 +9,6 @@ namespace Core.Entities
         public DateTime Date { get; set; }
         public IncomeCat IncomeCat { get; set; }
         public int IncomeCatId { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

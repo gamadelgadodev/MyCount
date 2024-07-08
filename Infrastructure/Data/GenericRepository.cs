@@ -21,6 +21,29 @@ namespace Infrastructure.Data
         {
             return await _context.Set<T>().FindAsync(id);
         }
+        public async Task<T> AddNewEntity(T entity)
+        {
+            await _context.Set<T>().AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return entity;
+        }
+        public async Task<T> UpdateEntity(T entity)
+        {
+            _context.Set<T>().Update(entity);
+            await _context.SaveChangesAsync();
+            return entity;
+        }
+        public async Task<T> DeleteEntity(int id)
+        {
+            var entity = await _context.Set<T>().FindAsync(id);
+            if (entity == null)
+            {
+                throw new KeyNotFoundException("Entity not found");
+            }
+        ((dynamic)entity).IsDeleted = true;
+            await _context.SaveChangesAsync();
+            return entity;
+        }
         public async Task<IReadOnlyList<T>> ListAllAsync()
         {
             return await _context.Set<T>().ToListAsync();

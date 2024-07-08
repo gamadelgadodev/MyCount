@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using API.DTOs;
+using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
 using Microsoft.AspNetCore.Http;
@@ -24,10 +25,18 @@ namespace API.Controllers
             return Ok(products);
         }
         [HttpPost]
-        public async Task<ActionResult> CreateUser(User user)
+        public async Task<ActionResult> CreateUser(NewUser userDto)
         {
-
-            return Ok();
+            var user = new User
+            {
+                UserName = userDto.UserName,
+                Password = userDto.Password,
+                LastName = userDto.LastName,
+                Name = userDto.Name,
+                IsDeleted = false
+            };
+            var createUser = await _userRepo.AddNewEntity(user);
+            return Ok(createUser);
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Core.Entities
         public int Regularity { get; set; }
         public DateTime PastDate { get; set; }
         public DateTime NextTime { get; set;}
+        public bool IsDeleted { get; set; }
 
     }
 }

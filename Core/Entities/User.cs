@@ -6,5 +6,6 @@ namespace Core.Entities
         public string Password { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

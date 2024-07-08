@@ -15,5 +15,6 @@ namespace Core.Entities
         public decimal Balance { get; set; }
         public string Description { get; set; }
         public decimal Debt { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
