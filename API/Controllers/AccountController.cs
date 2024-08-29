@@ -24,7 +24,7 @@ namespace API.Controllers
             return Ok(products);
         }
         [HttpPost]
-        public async Task<ActionResult> CreateUser(NewAcct acctDto)
+        public async Task<ActionResult> CreateAcct(NewAcct acctDto)
         {
             var acct = new Account
             {
