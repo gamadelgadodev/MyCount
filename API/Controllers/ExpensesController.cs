@@ -46,7 +46,7 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateExpense(Expense expense)
+        public async Task<ActionResult> UpdateExpense(upExpense expense)
         {
             var expOld = await _expRepo.GetByIdAsync(expense.Id);
             expOld.AccountId = expense.AccountId;

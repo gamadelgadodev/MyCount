@@ -1,22 +1,23 @@
-﻿using Core.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace API.DTOs
 {
-    public class newExpense
+    public class NewIncome
     {
         public int AccountId { get; set; }
-        public int ExpenseCatId { get; set; }
         public decimal Value { get; set; }
         public string Description { get; set; }
-        public bool nessesary { get; set; }
+        public int IncomeCatId { get; set; }
     }
-    public class upExpense
+    public class UpIncome
     {
         public int Id { get; set; }
         public int AccountId { get; set; }
-        public int ExpenseCatId { get; set; }
         public decimal Value { get; set; }
         public string Description { get; set; }
-        public bool nessesary { get; set; }
+        public int IncomeCatId { get; set; }
     }
 }
