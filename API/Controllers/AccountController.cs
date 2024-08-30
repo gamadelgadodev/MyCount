@@ -15,13 +15,19 @@ namespace API.Controllers
         {
             _accountRepo = accountRepo;
         }
-        [HttpGet]
+        [HttpGet("All")]
         //public async Task<ActionResult> GetProducts()
         public async Task<ActionResult<List<Account>>> GetProducts()
         {
             //var spec = new ProductsWithTypesAndBrandesSpecification();
             var products = await _accountRepo.ListAllAsync();
             return Ok(products);
+        }
+        [HttpGet("Active")]
+        public async Task<ActionResult<List<Account>>> GetActiveUsers()
+        {
+            var AccAc = await _accountRepo.ListAcAsync();
+            return Ok(AccAc);
         }
         [HttpPost]
         public async Task<ActionResult> CreateAcct(NewAcct acctDto)
@@ -37,6 +43,24 @@ namespace API.Controllers
             };
             var createUser = await _accountRepo.AddNewEntity(acct);
             return Ok(createUser);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateUser(UpAcct acctDto)
+        {
+            var acctOld = await _accountRepo.GetByIdAsync(acctDto.Id);
+            acctOld.Name = acctDto.Name;
+            acctOld.Balance = acctDto.Balance;
+            acctOld.Description = acctDto.Description;
+            acctOld.Debt = acctDto.Debt;
+            var updateUser = await _accountRepo.UpdateEntity(acctOld);
+            return Ok(updateUser);
+        }
+        [HttpDelete]
+        public async Task<ActionResult> DeleteUser(int id)
+        {
+            var acctDelete = await _accountRepo.DeleteEntity(id);
+            return Ok(acctDelete);
         }
     }
 }

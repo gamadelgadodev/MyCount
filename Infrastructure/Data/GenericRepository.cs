@@ -49,6 +49,10 @@ namespace Infrastructure.Data
         {
             return await _context.Set<T>().ToListAsync();
         }
+        public async Task<IReadOnlyList<T>> ListAcAsync()
+        {
+            return await _context.Set<T>().Where(x => EF.Property<bool>(x, "IsDeleted") == false).ToListAsync();
+        }
         public async Task<T> GetEntityWithSpec(ISpecification<T> spec)
         {
             return await ApplySpecification(spec).FirstOrDefaultAsync();

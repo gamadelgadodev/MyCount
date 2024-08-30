@@ -21,16 +21,13 @@ namespace API.Controllers
         //public async Task<ActionResult> GetProducts()
         public async Task<ActionResult<List<User>>> GetAllUsers()
         {
-            //var spec = new ProductsWithTypesAndBrandesSpecification();
             var products = await _userRepo.ListAllAsync();
             return Ok(products);
         }
         [HttpGet("Active")]
         public async Task<ActionResult<List<User>>> GetActiveUsers()
         {
-            //var spec = new ProductsWithTypesAndBrandesSpecification();
-            var products = await _userRepo.ListAllAsync();
-            var userAc = products.Where(x => x.IsDeleted.Equals(false)).ToList();
+            var userAc = await _userRepo.ListAcAsync();
             return Ok(userAc);
         }
 
@@ -63,10 +60,8 @@ namespace API.Controllers
         [HttpDelete]
         public async Task<ActionResult> DeleteUser(int id)
         {
-            var userDelete = await _userRepo.GetByIdAsync(id);
-            userDelete.IsDeleted = true;
-            var deleteUser = await _userRepo.UpdateEntity(userDelete);
-            return Ok(deleteUser);
+            var userDelete = await _userRepo.DeleteEntity(id);
+            return Ok(userDelete);
         }
     }
 }
