@@ -1,0 +1,40 @@
+/* Fondo de la navbar con un azul suave */
+.custom-navbar {
+    background-color: #5a8dee; /* Azul suave */
+  }
+  
+  /* Estilos para los enlaces */
+  .navbar-brand,
+  .nav-link {
+    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Botones redondeados */
+  .rounded-link {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+  }
+  
+  /* Cambiar el color de fondo y texto al pasar el ratón */
+  .nav-link:hover {
+    background-color: #4169e1; /* Azul más fuerte al pasar el cursor */
+    color: #ffd700; /* Color dorado para el texto al pasar el cursor */
+  }
+  
+  /* Asegurar que el enlace activo mantenga el color */
+  .nav-link.active {
+    background-color: #4169e1;
+    color: #ffd700;
+  }
+  
+  /* Centrar los elementos en la navbar */
+  .navbar-nav {
+    text-align: center;
+  }
+  
+  .nav-item {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+  
