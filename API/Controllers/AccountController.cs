@@ -29,6 +29,12 @@ namespace API.Controllers
             var AccAc = await _accountRepo.ListAcAsync();
             return Ok(AccAc);
         }
+        [HttpGet("ById/{id}")]
+        public async Task<ActionResult<Account>> GetByIdAsync(int id)
+        {
+            var AccId = await _accountRepo.GetByIdAsync(id);
+            return AccId;
+        }
         [HttpPost]
         public async Task<ActionResult> CreateAcct(NewAcct acctDto)
         {
