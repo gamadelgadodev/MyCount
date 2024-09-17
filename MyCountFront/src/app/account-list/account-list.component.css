@@ -1,0 +1,20 @@
+/* Estilo para los enlaces dentro de la lista */
+.account-link {
+    display: block; /* Hace que el enlace ocupe todo el espacio del li */
+    color: inherit; /* Hereda el color del texto del li */
+    text-decoration: none; /* Quita el subrayado del enlace */
+  }
+  
+  /* Efecto hover para el enlace */
+  .list-group-item:hover .account-link {
+    background-color: #d6eaff; /* Azul claro cuando el mouse pasa por encima */
+    cursor: pointer; /* Cambia el cursor a mano cuando se hace hover */
+    padding: 10px; /* Añade algo de espacio alrededor del texto */
+  }
+  
+  /* Estilo del elemento seleccionado */
+  .list-group-item.active .account-link {
+    background-color: #a6d1ff; /* Azul más oscuro para el elemento activo */
+    color: white; /* Cambia el color del texto */
+  }
+  

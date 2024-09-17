@@ -1,10 +1,18 @@
 <div class="container mt-4">
-  <h2>Active Account</h2>
+  <h2>Active Accounts</h2>
   <ul class="list-group">
-    <li class="list-group-item">
-      <h5>{{ accounts[0].name }}</h5>
-      <p><strong>Balance:</strong> ${{ accounts[0].balance }}</p>
-      <p>{{ accounts[0].description }}</p>
+    <!-- Recorre todas las cuentas en el array usando *ngFor -->
+    <li *ngFor="let account of accounts" class="list-group-item">
+      <a [routerLink]="['/account', account.id]" class="account-link">
+        <h5>{{ account.name }}</h5>
+        <p><strong>Balance:</strong> ${{ account.balance }}</p>
+        <p>{{ account.description }}</p>
+      </a>
+    </li>
+
+    <!-- Muestra un mensaje si no hay cuentas disponibles -->
+    <li *ngIf="!accounts || accounts.length === 0" class="list-group-item">
+      <p>No accounts available.</p>
     </li>
   </ul>
 </div>
