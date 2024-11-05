@@ -1,32 +1,42 @@
-<h1 mat-dialog-title>Add Income</h1>
+
+<h1 mat-dialog-title>Add Income to {{account.name}}</h1>
 <div mat-dialog-content>
   <form [formGroup]="incomeForm" (ngSubmit)="onSubmit()">
-    <!-- Definir un contenedor de columna para alinear verticalmente los elementos -->
     <div style="display: flex; flex-direction: column; gap: 16px;">
       
-      <!-- Account ID Field -->
-      <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-form-field appearance="fill" style="width: 100%;" hidden>
         <mat-label>Account ID</mat-label>
         <input matInput formControlName="accountId" required readonly>
       </mat-form-field>
       
-      <!-- Value Field -->
       <mat-form-field appearance="fill" style="width: 100%;">
         <mat-label>Value</mat-label>
         <input matInput formControlName="value" required type="number">
       </mat-form-field>
-      
-      <!-- Description Field -->
+
       <mat-form-field appearance="fill" style="width: 100%;">
         <mat-label>Description</mat-label>
         <input matInput formControlName="description" required>
       </mat-form-field>
 
-      <!-- Income Category ID Field -->
       <mat-form-field appearance="fill" style="width: 100%;">
-        <mat-label>Income Category ID</mat-label>
-        <input matInput formControlName="incomeCatId" required type="number">
+        <mat-label>Income Category</mat-label>
+        <mat-select formControlName="incomeCatId" required>
+          <mat-option *ngFor="let category of incomeCat" [value]="category.id">
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
+
+      <!-- <mat-form-field appearance="fill" style="width: 100%;">
+        <select id='peeps' name='people' [(ngModel)]="peepsSelect">
+          <option *ngFor="let item of data" [value]="item.name">
+            {{item.name}}
+          </option>    
+      </select>
+      </mat-form-field> -->
+     
+
     </div>
     
     <mat-dialog-actions style="margin-top: 16px;">

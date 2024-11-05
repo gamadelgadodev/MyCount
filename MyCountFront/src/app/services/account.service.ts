@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
 import { Account } from '../models/account.model';
+import { IncomeCat } from '../models/income-cat.model';
 
 
 @Injectable({
@@ -20,5 +21,8 @@ export class AccountService {
   }
   addIncome(income: { accountId: number; value: number; description: string; incomeCatId: number }): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}income`, income);
+  }
+  getActiveIncomeCats(): Observable<IncomeCat[]>{
+    return this.http.get<IncomeCat[]>(this.apiUrl.concat("IncomeCat/Active"));
   }
 }

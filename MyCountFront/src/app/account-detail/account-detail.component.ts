@@ -6,6 +6,7 @@ import { Account } from '../models/account.model';
 import { MatDialog } from '@angular/material/dialog';
 import { IncomeDialogComponent } from '../income-dialog/income-dialog.component';
 
+
 @Component({
   selector: 'app-account-detail',
   standalone: true,
@@ -31,7 +32,7 @@ export class AccountDetailComponent {
 
   openIncomeDialog(): void {
     const dialogRef = this.dialog.open(IncomeDialogComponent, {
-      data: { accountId: this.account.id } 
+      data: { account: this.account } 
     });
 
     dialogRef.afterClosed().subscribe(result => {
