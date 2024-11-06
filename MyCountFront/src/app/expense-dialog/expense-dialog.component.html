@@ -1,0 +1,52 @@
+
+<h1 mat-dialog-title>Add Expense to {{account.name}}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      
+      <mat-form-field appearance="fill" style="width: 100%;" hidden>
+        <mat-label>Account ID</mat-label>
+        <input matInput formControlName="accountId" required readonly>
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Value</mat-label>
+        <input matInput formControlName="value" required type="number">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="description" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Income Category</mat-label>
+        <mat-select formControlName="expenseCatId" required>
+          <mat-option *ngFor="let category of expenseCat" [value]="category.id">
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input hidden=true matInput>
+        <mat-checkbox matInput formControlName="nessesary">Necessary</mat-checkbox>
+      </mat-form-field>
+
+      <!-- <mat-form-field appearance="fill" style="width: 100%;">
+        <select id='peeps' name='people' [(ngModel)]="peepsSelect">
+          <option *ngFor="let item of data" [value]="item.name">
+            {{item.name}}
+          </option>    
+      </select>
+      </mat-form-field> -->
+     
+
+    </div>
+    
+    <mat-dialog-actions style="margin-top: 16px;">
+      <button mat-button (click)="onCancel()">Cancel</button>
+      <button mat-button type="submit" color="primary">Add Income</button>
+    </mat-dialog-actions>
+  </form>
+</div>

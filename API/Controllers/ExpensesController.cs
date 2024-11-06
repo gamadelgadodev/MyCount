@@ -39,6 +39,7 @@ namespace API.Controllers
                 Value = newExp.Value,
                 Description = newExp.Description,
                 Date = DateTime.Now,
+                nessesary = newExp.nessesary,
                 IsDeleted = false
             };
             var createExp = await _expRepo.AddNewEntity(exp);

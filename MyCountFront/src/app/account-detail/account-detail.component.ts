@@ -5,6 +5,7 @@ import { AccountService } from '../services/account.service';
 import { Account } from '../models/account.model';
 import { MatDialog } from '@angular/material/dialog';
 import { IncomeDialogComponent } from '../income-dialog/income-dialog.component';
+import { ExpenseDialogComponent } from '../expense-dialog/expense-dialog.component';
 
 
 @Component({
@@ -40,6 +41,20 @@ export class AccountDetailComponent {
         console.log('Income added');
       }
     });
+
+  }
+
+  openExpenseDialog(): void {
+    const dialogRef = this.dialog.open(ExpenseDialogComponent, {
+      data: { account: this.account } 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Expense added');
+      }
+    });
+    
   }
   
 }
