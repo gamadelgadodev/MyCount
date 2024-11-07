@@ -50,7 +50,12 @@ namespace API.Controllers
             
             return Ok(combinedList);
         }
-
-
+        [HttpGet("AllT")]
+        public async Task<ActionResult<List<Expense>>> GetAllTransactions()
+        {
+        var obj = await _expRepo.ListPage(3,2);
+        return Ok(obj);
+        }
     }
+     
 }
