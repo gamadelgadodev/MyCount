@@ -17,4 +17,21 @@
       </div>
     </div>
   </div>
+  <h2>Recent transactions</h2>
+  <ul class="list-group">
+    <!-- Recorre todas las cuentas en el array usando *ngFor -->
+    <li *ngFor="let transaction of transactions" class="list-group-item">
+      <!-- <a [routerLink]="['/account', account.id]" class="account-link"> -->
+        <h5>{{ transaction.value }}</h5>
+        <p><strong>Description:</strong> {{ transaction.description }}</p>
+        <p><strong>Type:</strong>{{ transaction.typeTransaction }}</p>
+      <!-- </a> -->
+    </li>
+
+    <!-- Muestra un mensaje si no hay cuentas disponibles -->
+    <li *ngIf="!transactions || transactions.length === 0" class="list-group-item">
+      <p>No transactions available.</p>
+    </li>
+  </ul>
 </div>
+

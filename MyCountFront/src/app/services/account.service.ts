@@ -4,6 +4,7 @@ import { catchError, Observable } from 'rxjs';
 import { Account } from '../models/account.model';
 import { IncomeCat } from '../models/income-cat.model';
 import { ExpenseCat } from '../models/expense-cat.model';
+import { Transaction } from '../models/transaction.model';
 
 
 @Injectable({
@@ -20,16 +21,19 @@ export class AccountService {
   getAccountById(id: any): Observable<Account> {
     return this.http.get<Account>(`${this.apiUrl}Account/ById/${id}`);
   }
-  addIncome(income: { accountId: number; value: number; description: string; incomeCatId: number }): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}income`, income);
+  addIncome(income: { accountId: number; value: number; description: string; typeTransaction: string;transactionCatId: number }): Observable<void> {
+    return this.http.post<void>(this.apiUrl.concat("Transaction/addIncome"), income);
   }
-  addExpense(expense: { accountId: number; value: number; description: string; expenseCatId: number;  nessesary: boolean}): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}Expenses`, expense);
+  addExpense(expense: { accountId: number; value: number; description: string; typeTransaction: string; transactionCatId: number;  nessesary: boolean}): Observable<void> {
+    return this.http.post<void>(this.apiUrl.concat("Transaction/addExpense"), expense);
   }
   getActiveIncomeCats(): Observable<IncomeCat[]>{
-    return this.http.get<IncomeCat[]>(this.apiUrl.concat("IncomeCat/Active"));
+    return this.http.get<IncomeCat[]>(this.apiUrl.concat("TransactionCat/AllIncoCat"));
   }
   getActiveExpenseCats(): Observable<ExpenseCat[]>{
-    return this.http.get<ExpenseCat[]>(this.apiUrl.concat("ExpenseCat/Active"))
+    return this.http.get<ExpenseCat[]>(this.apiUrl.concat("TransactionCat/AllExpenseCat"))
+  }
+  getRecTrans(): Observable<Transaction[]>{
+    return this.http.get<Transaction[]>(this.apiUrl.concat("Transaction/Recent"))
   }
 }

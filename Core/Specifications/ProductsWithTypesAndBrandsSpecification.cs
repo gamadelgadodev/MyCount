@@ -7,12 +7,12 @@ using Core.Entities;
 
 namespace Core.Specifications
 {
-    public class ProductsWithTypesAndBrandesSpecification : BaseSpecification<Income>
+    public class ProductsWithTypesAndBrandesSpecification : BaseSpecification<Transaction>
     {
         public ProductsWithTypesAndBrandesSpecification()
         {
             AddInclude(x=> x.Account);
-            AddInclude( x=> x.IncomeCat);
+            AddInclude( x=> x.TransactionCat);
         }
 
         //public ProductsWithTypesAndBrandesSpecification(int id) 

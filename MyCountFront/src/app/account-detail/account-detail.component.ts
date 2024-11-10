@@ -6,7 +6,7 @@ import { Account } from '../models/account.model';
 import { MatDialog } from '@angular/material/dialog';
 import { IncomeDialogComponent } from '../income-dialog/income-dialog.component';
 import { ExpenseDialogComponent } from '../expense-dialog/expense-dialog.component';
-
+import { Transaction } from '../models/transaction.model';
 
 @Component({
   selector: 'app-account-detail',
@@ -17,6 +17,7 @@ import { ExpenseDialogComponent } from '../expense-dialog/expense-dialog.compone
 })
 export class AccountDetailComponent {
   account: any; 
+  transactions: Transaction[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -26,9 +27,23 @@ export class AccountDetailComponent {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.accountService.getAccountById(id).subscribe(data => {
-      this.account = data;
-    });
+    this.accountService.getAccountById(id).subscribe(
+      data => {
+        this.account = data;
+      },
+      error => {
+        console.error('Error al obtener la cuenta:', error);
+      }
+    );
+    this.accountService.getRecTrans().subscribe(
+      (data: Transaction[]) => {
+        this.transactions = data;
+        console.log('Lista de cuentas:', this.transactions);
+      },
+      error => {
+        console.error('Error al obtener las cuentas activas:', error);
+      }
+    );
   }
 
   openIncomeDialog(): void {
@@ -38,10 +53,11 @@ export class AccountDetailComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        window.location.reload()
         console.log('Income added');
       }
     });
-
+    
   }
 
   openExpenseDialog(): void {
@@ -51,10 +67,12 @@ export class AccountDetailComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        window.location.reload()
         console.log('Expense added');
       }
     });
     
   }
+  
   
 }

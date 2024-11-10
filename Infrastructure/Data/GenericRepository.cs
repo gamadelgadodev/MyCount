@@ -54,13 +54,13 @@ namespace Infrastructure.Data
             return await _context.Set<T>().Where(x => EF.Property<bool>(x, "IsDeleted") == false).ToListAsync();
         }
         public async Task<IReadOnlyList<T>> ListPage(int page, int pageSize)
-{
-    return await _context.Set<T>()
-        .OrderBy(x => EF.Property<DateTime>(x, "Date"))
-        .Skip((page - 1) * pageSize) // Omite los registros anteriores
-        .Take(pageSize)               // Toma el tamaño de página especificado
-        .ToListAsync();
-}
+        {
+            return await _context.Set<T>()
+                .OrderByDescending(x => EF.Property<DateTime>(x, "Date"))
+                .Skip((page - 1) * pageSize) // Omite los registros anteriores
+                .Take(pageSize)               // Toma el tamaño de página especificado
+                .ToListAsync();
+        }
         // public async Task<List<Users>> GetAllUsers(int page,int pageSize){ 
         //     var query = db
         //     .Users

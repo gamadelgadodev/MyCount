@@ -6,27 +6,44 @@ using API.DTOs;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ExpenseCatController : ControllerBase
+    public class TransactionCatController : ControllerBase
     {
-        private readonly IGenericRepository<ExpenseCat> _ecatRepo;
-        public ExpenseCatController(IGenericRepository<ExpenseCat> ecatRepo)
+        private readonly IGenericRepository<TransactionCat> _ecatRepo;
+        public TransactionCatController(IGenericRepository<TransactionCat> ecatRepo)
         {
             _ecatRepo = ecatRepo;
         }
         [HttpGet("All")]
         //public async Task<ActionResult> GetProducts()
-        public async Task<ActionResult<List<Expense>>> GetAllExCat()
+        public async Task<ActionResult<List<Transaction>>> GetAllCat()
         {
             var exCat = await _ecatRepo.ListAllAsync();
             return Ok(exCat);
         }
+        [HttpGet("AllExpenseCat")]
+        //public async Task<ActionResult> GetProducts()
+        public async Task<ActionResult<List<Transaction>>> GetAllExCat()
+        {
+            var exCat = await _ecatRepo.ListAllAsync();
+            exCat = exCat.Where(x=>x.typeCat=="expense").ToList();
+            return Ok(exCat);
+        }
+         [HttpGet("AllIncoCat")]
+        //public async Task<ActionResult> GetProducts()
+        public async Task<ActionResult<List<Transaction>>> GetAllInCat()
+        {
+            var incCat = await _ecatRepo.ListAllAsync();
+            incCat = incCat.Where(x=>x.typeCat=="income").ToList();
+            return Ok(incCat);
+        }
         [HttpGet("Active")]
-        public async Task<ActionResult<List<Expense>>> GetActiveExCat()
+        public async Task<ActionResult<List<Transaction>>> GetActiveExCat()
         {
             var exCatAc = await _ecatRepo.ListAcAsync();
             return Ok(exCatAc);
@@ -35,7 +52,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateExpCat(NewExCat newExCat)
         {
-            var exp = new ExpenseCat
+            var exp = new TransactionCat
             {
                 Name = newExCat.Name,
                 Description = newExCat.Description,

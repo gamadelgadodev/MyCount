@@ -48,8 +48,9 @@ export class ExpenseDialogComponent {
       accountId: [data.account.id],
       value: ['', [Validators.required, Validators.min(0)]],
       description: ['', Validators.required],
-      nessesary: ['', Validators.required],
-      expenseCatId: ['', Validators.required]
+      nessesary: [false, Validators.required],
+      typeTransaction: ['expense'],
+      transactionCatId: []
     });
     console.log(this.account)
     console.log(data)

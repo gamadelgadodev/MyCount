@@ -21,7 +21,7 @@
 
       <mat-form-field appearance="fill" style="width: 100%;">
         <mat-label>Income Category</mat-label>
-        <mat-select formControlName="incomeCatId" required>
+        <mat-select formControlName="transactionCatId" required>
           <mat-option *ngFor="let category of incomeCat" [value]="category.id">
             {{ category.name }}
           </mat-option>
