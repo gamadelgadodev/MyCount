@@ -56,18 +56,12 @@ namespace Infrastructure.Data
         public async Task<IReadOnlyList<T>> ListPage(int page, int pageSize)
         {
             return await _context.Set<T>()
+                .Where(x => EF.Property<bool>(x, "IsDeleted") == false)
                 .OrderByDescending(x => EF.Property<DateTime>(x, "Date"))
-                .Skip((page - 1) * pageSize) // Omite los registros anteriores
-                .Take(pageSize)               // Toma el tamaño de página especificado
+                .Skip((page - 1) * pageSize) 
+                .Take(pageSize)              
                 .ToListAsync();
         }
-        // public async Task<List<Users>> GetAllUsers(int page,int pageSize){ 
-        //     var query = db
-        //     .Users
-        //     .OrderBy(user => user.Id)
-        //     .Skip((page - 1) * pageSize)
-        //     .Take(pageSize);
-        // }
         public async Task<T> GetEntityWithSpec(ISpecification<T> spec)
         {
             return await ApplySpecification(spec).FirstOrDefaultAsync();

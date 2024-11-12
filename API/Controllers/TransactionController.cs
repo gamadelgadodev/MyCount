@@ -11,9 +11,11 @@ namespace API.Controllers
     public class TransactionController : ControllerBase
     {
         private readonly IGenericRepository<Transaction> _expRepo;
-        public TransactionController(IGenericRepository<Transaction> expRepo)
+        private readonly ITransactionRepository _tRepo;
+        public TransactionController(IGenericRepository<Transaction> expRepo,ITransactionRepository tRepo)
         {
             _expRepo = expRepo;
+            _tRepo = tRepo;
         }
         [HttpGet("All")]
         //public async Task<ActionResult> GetProducts()
@@ -28,10 +30,10 @@ namespace API.Controllers
             var expAc = await _expRepo.ListAcAsync();
             return Ok(expAc);
         }
-        [HttpGet("Recent")]
-        public async Task<ActionResult<List<TransactionsGen>>> getRecent()
+        [HttpGet("Recent/{accountId}")]
+        public async Task<ActionResult<List<TransactionsGen>>> getRecent(int accountId)
         {
-            var Transactions = await _expRepo.ListPage(1,10);
+            var Transactions = await _tRepo.ListPage(1,10,accountId);
             return Ok(Transactions);
         }
         [HttpPost]
@@ -48,7 +50,7 @@ namespace API.Controllers
                 nessesary = newTransaction.nessesary,
                 IsDeleted = false
             };
-            var createExp = await _expRepo.AddNewEntity(exp);
+            var createExp = await _tRepo.CreateTransB(exp);
             return Ok(createExp);
         }
          [HttpPost("addExpense")]
@@ -65,7 +67,7 @@ namespace API.Controllers
                 nessesary = newTransaction.nessesary,
                 IsDeleted = false
             };
-            var createExp = await _expRepo.AddNewEntity(exp);
+            var createExp = await _tRepo.CreateTransB(exp);
             return Ok(createExp);
         }
 
@@ -83,7 +85,7 @@ namespace API.Controllers
                 nessesary = newTransaction.nessesary,
                 IsDeleted = false
             };
-            var createExp = await _expRepo.AddNewEntity(exp);
+            var createExp = await _tRepo.CreateTransB(exp);
             return Ok(createExp);
         }
 

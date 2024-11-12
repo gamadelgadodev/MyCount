@@ -18,6 +18,9 @@ export class AccountService {
   getActiveAccounts(): Observable<Account[]> {
     return this.http.get<Account[]>(this.apiUrl.concat("Account/Active"));
   }
+  getAccountsByUser(id: any): Observable<Account[]> {
+    return this.http.get<Account[]>(`${this.apiUrl}Account/UserAcc/${id}`);
+  }
   getAccountById(id: any): Observable<Account> {
     return this.http.get<Account>(`${this.apiUrl}Account/ById/${id}`);
   }
@@ -33,7 +36,7 @@ export class AccountService {
   getActiveExpenseCats(): Observable<ExpenseCat[]>{
     return this.http.get<ExpenseCat[]>(this.apiUrl.concat("TransactionCat/AllExpenseCat"))
   }
-  getRecTrans(): Observable<Transaction[]>{
-    return this.http.get<Transaction[]>(this.apiUrl.concat("Transaction/Recent"))
+  getRecTrans(id: any): Observable<Transaction[]>{
+    return this.http.get<Transaction[]>(`${this.apiUrl}Transaction/Recent/${id}`);
   }
 }

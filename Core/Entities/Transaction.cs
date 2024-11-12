@@ -7,6 +7,7 @@ namespace Core.Entities
         public decimal Value { get; set; }
         public string Description { get; set; }
         public string typeTransaction { get; set; }
+        public decimal Balance { get; set; }
         public DateTime Date { get; set; }
         public TransactionCat TransactionCat { get; set; }
         public int TransactionCatId { get; set; }

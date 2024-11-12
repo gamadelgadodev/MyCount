@@ -35,7 +35,7 @@ export class AccountDetailComponent {
         console.error('Error al obtener la cuenta:', error);
       }
     );
-    this.accountService.getRecTrans().subscribe(
+    this.accountService.getRecTrans(id).subscribe(
       (data: Transaction[]) => {
         this.transactions = data;
         console.log('Lista de cuentas:', this.transactions);

@@ -18,7 +18,7 @@ export class AccountListComponent implements OnInit {
   constructor(private accountService: AccountService) {}
 
   ngOnInit(): void {
-    this.accountService.getActiveAccounts().subscribe((data: Account[]) => {
+    this.accountService.getAccountsByUser(1).subscribe((data: Account[]) => { //hadrcodeed user id 
       this.accounts = data;
       console.log('Lista de cuentas:', this.accounts);
     });
