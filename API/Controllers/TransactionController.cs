@@ -88,7 +88,19 @@ namespace API.Controllers
             var createExp = await _tRepo.CreateTransB(exp);
             return Ok(createExp);
         }
-
+        [HttpPut("editTrans")]
+        public async Task<ActionResult> UpdateTransactionReload(upTransaction Transaction)
+        {
+            
+            var expOld = await _expRepo.GetByIdAsync(Transaction.Id);
+            decimal valOld = expOld.Value;
+            expOld.AccountId = Transaction.AccountId;
+            expOld.TransactionCatId = Transaction.TransactionCatId;
+            expOld.Value = Transaction.Value;
+            expOld.Description = Transaction.Description;
+            var updateExp = await _tRepo.UpdateTrans(expOld,valOld);
+            return Ok(updateExp);
+        }
         [HttpPut]
         public async Task<ActionResult> UpdateTransaction(upTransaction Transaction)
         {
@@ -104,7 +116,7 @@ namespace API.Controllers
         [HttpDelete]
         public async Task<ActionResult> DeleteTransaction(int id)
         {
-            var expDelete = await _expRepo.DeleteEntity(id);
+            var expDelete = await _tRepo.DelteTrans(id);
             return Ok(expDelete);
         }
 

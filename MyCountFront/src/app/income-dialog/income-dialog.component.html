@@ -4,7 +4,7 @@
   <form [formGroup]="incomeForm" (ngSubmit)="onSubmit()">
     <div style="display: flex; flex-direction: column; gap: 16px;">
       
-      <mat-form-field appearance="fill" style="width: 100%;" hidden>
+      <mat-form-field appearance="fill" style="width: 100%;" >
         <mat-label>Account ID</mat-label>
         <input matInput formControlName="accountId" required readonly>
       </mat-form-field>
@@ -27,14 +27,6 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
-      <!-- <mat-form-field appearance="fill" style="width: 100%;">
-        <select id='peeps' name='people' [(ngModel)]="peepsSelect">
-          <option *ngFor="let item of data" [value]="item.name">
-            {{item.name}}
-          </option>    
-      </select>
-      </mat-form-field> -->
      
 
     </div>

@@ -13,6 +13,7 @@ namespace Core.Interfaces
         Task<List<Transaction>> ListPage(int page,int pageSize,int accountId);
         // Task<Transaction> (Transaction entity);
         Task<Transaction> CreateTransB(Transaction tras);
-        
+        Task<Transaction> UpdateTrans(Transaction tras, decimal value);
+        Task<Transaction> DelteTrans(int id);
     }
 }

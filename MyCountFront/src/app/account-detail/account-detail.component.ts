@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AccountService } from '../services/account.service';
@@ -11,7 +11,7 @@ import { Transaction } from '../models/transaction.model';
 @Component({
   selector: 'app-account-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,NgIf],
   templateUrl: './account-detail.component.html',
   styleUrl: './account-detail.component.css'
 })
@@ -46,9 +46,9 @@ export class AccountDetailComponent {
     );
   }
 
-  openIncomeDialog(): void {
+  openIncomeDialog(incomeData?: any): void {
     const dialogRef = this.dialog.open(IncomeDialogComponent, {
-      data: { account: this.account } 
+      data: { account: this.account, incomeData: incomeData,  } 
     });
 
     dialogRef.afterClosed().subscribe(result => {

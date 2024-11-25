@@ -29,6 +29,7 @@ export class IncomeDialogComponent {
   account: any;
   incomeForm: FormGroup;
   incomeCat: IncomeCat[] = [];
+  incomeD : any;
 
   constructor(
     private fb: FormBuilder,
@@ -37,24 +38,37 @@ export class IncomeDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any 
   ) {
     this.account= data.account;
+    this.incomeD = data.incomeData;
     this.accountService.getActiveIncomeCats().subscribe((data: IncomeCat[]) => {
       this.incomeCat = data;
       console.log('Lista de categories:', this.incomeCat);
     });
     this.incomeForm = this.fb.group({
+      id: [data.incomeData?.id || ''],
       accountId: [data.account.id],
-      value: ['', [Validators.required, Validators.min(0)]],
-      description: ['', Validators.required],
+      value: [data.incomeData?.value || '', [Validators.required, Validators.min(0)]],
+      description: [data.incomeData?.description || '', Validators.required],
       typeTransaction: ['expense'],
-      transactionCatId: []
+      transactionCatId: [data.incomeData?.transactionCatId || '']
     });
     console.log(this.account)
-    console.log(data)
+    console.log("hello",this.incomeD)
+    console.log("data",data)
   }
   
   onSubmit(): void {
-    if (this.incomeForm.valid) {
+    if (this.incomeForm.valid && this.data.incomeData?.id==null) {
       this.accountService.addIncome(this.incomeForm.value).subscribe({
+        next: () => {
+          this.dialogRef.close(true);
+        },
+        error: (err) => {
+          console.error('Error adding income:', err);
+        }
+      });
+    }else
+    {
+      this.accountService.editIncome(this.incomeForm.value).subscribe({
         next: () => {
           this.dialogRef.close(true);
         },

@@ -29,28 +29,73 @@ namespace Infrastructure.Data
 
         public async Task<Transaction> CreateTransB(Transaction tras)
         {
-            var  balance = await _context.Transactions
-                .Where(x => x.IsDeleted == false)
-                .OrderByDescending(x => x.Date)
-                .Select(x => x.Balance)
-                .FirstOrDefaultAsync();
+            var account = await _context.Accounts
+                    .Where(x=>x.Id == tras.AccountId)
+                    .FirstOrDefaultAsync();
+            var balance = account.Balance;
             if(tras.typeTransaction.Equals("income"))
             {
                 balance += tras.Value; 
-                Console.WriteLine("hello entro al if");
             }
             else
             {
                 balance -= tras.Value; 
-                Console.WriteLine("hello entro al else");
                 
             }
-            Console.WriteLine(balance);
-
+            
             tras.Balance = balance;
+            account.Balance = balance;
             await _context.Transactions.AddAsync(tras);
+            _context.Accounts.Update(account);
             await _context.SaveChangesAsync();
             return tras;
+        }
+
+        public async Task<Transaction> UpdateTrans(Transaction tras, decimal value )
+        {
+            var oldTras = await _context.Transactions
+                                .Where(x=>x.Id == tras.Id)
+                                .FirstOrDefaultAsync();
+            var account = await _context.Accounts
+                    .Where(x=>x.Id == tras.AccountId)
+                    .FirstOrDefaultAsync();
+            var balance = account.Balance;
+            if(oldTras.typeTransaction.Equals("income") )
+            {
+                account.Balance -= value;
+                account.Balance += tras.Value;
+            }
+            else
+            {
+                account.Balance += value;
+                account.Balance -= tras.Value;
+            }
+            _context.Transactions.Update(tras);
+            _context.Accounts.Update(account);
+            await _context.SaveChangesAsync();
+            return tras;
+        }
+
+        public async Task<Transaction> DelteTrans(int id)
+        {
+            var oldTras = await _context.Transactions
+                                .Where(x=>x.Id == id)
+                                .FirstOrDefaultAsync();
+            var account = await _context.Accounts
+                    .Where(x=>x.Id == oldTras.AccountId)
+                    .FirstOrDefaultAsync();
+            var balance = account.Balance;
+            if(oldTras.typeTransaction.Equals("income"))
+            {
+                account.Balance -= oldTras.Value;
+            }
+            else
+            { 
+                account.Balance += oldTras.Value;
+            }
+            oldTras.IsDeleted = true;
+             await _context.SaveChangesAsync();
+            return oldTras;
         }
     }
 }
