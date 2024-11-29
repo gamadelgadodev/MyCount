@@ -4,7 +4,7 @@
   <form [formGroup]="incomeForm" (ngSubmit)="onSubmit()">
     <div style="display: flex; flex-direction: column; gap: 16px;">
       
-      <mat-form-field appearance="fill" style="width: 100%;" >
+      <mat-form-field appearance="fill" style="width: 100%;" hidden>
         <mat-label>Account ID</mat-label>
         <input matInput formControlName="accountId" required readonly>
       </mat-form-field>
@@ -33,6 +33,9 @@
     
     <mat-dialog-actions style="margin-top: 16px;">
       <button mat-button (click)="onCancel()">Cancel</button>
+      <div ng-if="false">
+        <button mat-button type="submit" color="primary">Edit Income</button>
+      </div>
       <button mat-button type="submit" color="primary">Add Income</button>
     </mat-dialog-actions>
   </form>

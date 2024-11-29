@@ -53,7 +53,7 @@ namespace API.Controllers
             var createExp = await _tRepo.CreateTransB(exp);
             return Ok(createExp);
         }
-         [HttpPost("addExpense")]
+         [HttpPost("addTransacction")]
         public async Task<ActionResult> CreateTransactionExp(newTransaction newTransaction)
         {
             var exp = new Transaction
@@ -61,7 +61,7 @@ namespace API.Controllers
                 AccountId = newTransaction.AccountId,
                 TransactionCatId = newTransaction.TransactionCatId,
                 Value = newTransaction.Value,
-                typeTransaction = "expense",
+                typeTransaction = newTransaction.typeTransaction,
                 Description = newTransaction.Description,
                 Date = DateTime.Now,
                 nessesary = newTransaction.nessesary,

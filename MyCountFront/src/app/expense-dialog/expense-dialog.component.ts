@@ -58,7 +58,7 @@ export class ExpenseDialogComponent {
   
   onSubmit(): void {
     if (this.expenseForm.valid) {
-      this.accountService.addExpense(this.expenseForm.value).subscribe({
+      this.accountService.addTrans(this.expenseForm.value).subscribe({
         next: () => {
           this.dialogRef.close(true);
         },

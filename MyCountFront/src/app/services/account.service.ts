@@ -24,14 +24,14 @@ export class AccountService {
   getAccountById(id: any): Observable<Account> {
     return this.http.get<Account>(`${this.apiUrl}Account/ById/${id}`);
   }
-  addIncome(income: { accountId: number; value: number; description: string; typeTransaction: string;transactionCatId: number }): Observable<void> {
-    return this.http.post<void>(this.apiUrl.concat("Transaction/addIncome"), income);
-  }
+  // addIncome(income: { accountId: number; value: number; description: string; typeTransaction: string;transactionCatId: number }): Observable<void> {
+  //   return this.http.post<void>(this.apiUrl.concat("Transaction/addIncome"), income);
+  // }
   editIncome(income: {id:number, accountId: number; value: number; description: string; typeTransaction: string;transactionCatId: number }): Observable<void> {
     return this.http.put<void>(this.apiUrl.concat("Transaction/editTrans"), income);
   }
-  addExpense(expense: { accountId: number; value: number; description: string; typeTransaction: string; transactionCatId: number;  nessesary: boolean}): Observable<void> {
-    return this.http.post<void>(this.apiUrl.concat("Transaction/addExpense"), expense);
+  addTrans(transaction: { accountId: number; value: number; description: string; typeTransaction: string; transactionCatId: number;  nessesary: boolean}): Observable<void> {
+    return this.http.post<void>(this.apiUrl.concat("Transaction/addTransacction"), transaction);
   }
   getActiveIncomeCats(): Observable<IncomeCat[]>{
     return this.http.get<IncomeCat[]>(this.apiUrl.concat("TransactionCat/AllIncoCat"));

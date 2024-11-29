@@ -1,7 +1,7 @@
 import { Component ,Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { AccountService } from '../services/account.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -21,7 +21,8 @@ import { IncomeCat } from '../models/income-cat.model';
     MatSelectModule,
     MatOptionModule,
     MatButtonModule,
-    CommonModule],
+    CommonModule,
+    NgIf],
   templateUrl: './income-dialog.component.html',
   styleUrl: './income-dialog.component.css'
 })
@@ -30,6 +31,7 @@ export class IncomeDialogComponent {
   incomeForm: FormGroup;
   incomeCat: IncomeCat[] = [];
   incomeD : any;
+  edit : boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -39,6 +41,9 @@ export class IncomeDialogComponent {
   ) {
     this.account= data.account;
     this.incomeD = data.incomeData;
+    if(this.incomeD!==null) 
+      this.edit = true;
+
     this.accountService.getActiveIncomeCats().subscribe((data: IncomeCat[]) => {
       this.incomeCat = data;
       console.log('Lista de categories:', this.incomeCat);
@@ -48,7 +53,7 @@ export class IncomeDialogComponent {
       accountId: [data.account.id],
       value: [data.incomeData?.value || '', [Validators.required, Validators.min(0)]],
       description: [data.incomeData?.description || '', Validators.required],
-      typeTransaction: ['expense'],
+      typeTransaction: ['income'],
       transactionCatId: [data.incomeData?.transactionCatId || '']
     });
     console.log(this.account)
@@ -58,7 +63,7 @@ export class IncomeDialogComponent {
   
   onSubmit(): void {
     if (this.incomeForm.valid && this.data.incomeData?.id==null) {
-      this.accountService.addIncome(this.incomeForm.value).subscribe({
+      this.accountService.addTrans(this.incomeForm.value).subscribe({
         next: () => {
           this.dialogRef.close(true);
         },
