@@ -1,0 +1,68 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md">
+        <div class="container-lg mt-4 text-lg-start text-sm-center">
+          <h2>{{ account.name }}</h2>
+        </div>
+      </div>
+      <div class="col-md d-flex justify-content-center align-items-center">
+          <div class="d-grid gap-2 col-6 align-middle">
+            <button class="btn btn-outline-success" type="button"(click)="openIncomeDialog()">search</button>
+        </div>
+      </div>
+    </div>
+    <ul class="list-group">
+      <li 
+    *ngFor="let transaction of transactions" 
+    class="list-group-item d-flex flex-column align-items-start"
+    [ngStyle]="{
+      'background-color': transaction.typeTransaction === 'income' ? '#f1fbf3' : '#fcedef',
+    }"
+  >
+    <div class="d-flex w-100 justify-content-between">
+      <div>
+        <h5 class="mb-1">{{ transaction.description }}</h5>
+        <small class="text-muted">{{ transaction.date | date: 'MMM d, y' }}</small>
+      </div>
+      <div class="ms-auto">
+        <h5 class="mb-1 text-sm-center">{{ transaction.value | currency }}</h5>
+        <div>
+          <div *ngIf="transaction.typeTransaction === 'expense'; else basicUserTemplate">
+            <div 
+              class="btn btn-outline-warning ms-1" 
+              type="button" 
+              (click)="openExpenseDialog(transaction)"
+            >
+              Edit
+            </div>
+            <div class="btn btn-outline-danger ms-1">Delete</div>
+          </div>
+          <ng-template #basicUserTemplate>
+            <div 
+              class="btn btn-outline-warning ms-1" 
+              type="button" 
+              (click)="openIncomeDialog(transaction)"
+            >
+              Edit
+            </div>
+            <div class="btn btn-outline-danger ms-1">Delete</div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </li>
+  <div class="m-3 d-flex justify-content-end" >
+    <div  *ngIf="!hasMore">
+        <button [routerLink]="['/transaction-list',1,page+1]" class=" btn btn-outline-primary">></button>
+    </div>
+  </div>
+  
+      <li *ngIf="!transactions || transactions.length === 0" class="list-group-item">
+        <p>No transactions available.</p>
+      </li>
+    </ul>
+    
+  </div>
+  
+  
+  

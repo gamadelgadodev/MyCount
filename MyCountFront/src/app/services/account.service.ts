@@ -30,6 +30,9 @@ export class AccountService {
   editIncome(income: {id:number, accountId: number; value: number; description: string; typeTransaction: string;transactionCatId: number }): Observable<void> {
     return this.http.put<void>(this.apiUrl.concat("Transaction/editTrans"), income);
   }
+  editExpense(income: {id:number, accountId: number; value: number; description: string; typeTransaction: string;transactionCatId: number; nessesary: boolean }): Observable<void> {
+    return this.http.put<void>(this.apiUrl.concat("Transaction/editTrans"), income);
+  }
   addTrans(transaction: { accountId: number; value: number; description: string; typeTransaction: string; transactionCatId: number;  nessesary: boolean}): Observable<void> {
     return this.http.post<void>(this.apiUrl.concat("Transaction/addTransacction"), transaction);
   }
@@ -42,5 +45,9 @@ export class AccountService {
   getRecTrans(id: any): Observable<Transaction[]>{
     return this.http.get<Transaction[]>(`${this.apiUrl}Transaction/Recent/${id}`);
   }
+  getAllTrans(id: any,page: any): Observable<Transaction[]>{
+    return this.http.get<Transaction[]>(`${this.apiUrl}Transaction/AllTrans/${id}/${page}`);
+  }
+
 
 }

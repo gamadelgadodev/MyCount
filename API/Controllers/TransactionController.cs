@@ -36,6 +36,12 @@ namespace API.Controllers
             var Transactions = await _tRepo.ListPage(1,10,accountId);
             return Ok(Transactions);
         }
+        [HttpGet("AllTrans/{accountId}/{page}")]
+        public async Task<ActionResult<List<TransactionsGen>>> getPagedTrans(int accountId, int page)
+        {
+            var Transactions = await _tRepo.ListPage(page,3,accountId);
+            return Ok(Transactions);
+        }
         [HttpPost]
         public async Task<ActionResult> CreateTransaction(newTransaction newTransaction)
         {

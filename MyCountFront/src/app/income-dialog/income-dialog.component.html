@@ -1,5 +1,11 @@
 
-<h1 mat-dialog-title>Add Income to {{account.name}}</h1>
+<div *ngIf="edit; else addIncoD">
+  <h1 mat-dialog-title>Edit Income in {{account.name}}</h1>
+</div>
+<ng-template #addIncoD>
+  <h1 mat-dialog-title>Add Income to {{account.name}}</h1>
+</ng-template>
+
 <div mat-dialog-content>
   <form [formGroup]="incomeForm" (ngSubmit)="onSubmit()">
     <div style="display: flex; flex-direction: column; gap: 16px;">
@@ -33,10 +39,13 @@
     
     <mat-dialog-actions style="margin-top: 16px;">
       <button mat-button (click)="onCancel()">Cancel</button>
-      <div ng-if="false">
+      <div *ngIf="edit; else addInco">
         <button mat-button type="submit" color="primary">Edit Income</button>
       </div>
-      <button mat-button type="submit" color="primary">Add Income</button>
+      <ng-template #addInco>
+        <button mat-button type="submit" color="primary">Add Income</button>
+    </ng-template>
+      
     </mat-dialog-actions>
   </form>
 </div>

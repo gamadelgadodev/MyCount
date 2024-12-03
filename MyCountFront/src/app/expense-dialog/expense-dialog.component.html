@@ -1,5 +1,10 @@
 
-<h1 mat-dialog-title>Add Expense to {{account.name}}</h1>
+<div *ngIf="edit; else addIncoD">
+  <h1 mat-dialog-title>Edit Expense in {{account.name}}</h1>
+</div>
+<ng-template #addIncoD>
+  <h1 mat-dialog-title>Add Expense to {{account.name}}</h1>
+</ng-template>
 <div mat-dialog-content>
   <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
     <div style="display: flex; flex-direction: column; gap: 16px;">
@@ -46,7 +51,12 @@
     
     <mat-dialog-actions style="margin-top: 16px;">
       <button mat-button (click)="onCancel()">Cancel</button>
-      <button mat-button type="submit" color="primary">Add Income</button>
+      <div *ngIf="edit; else addExp">
+        <button mat-button type="submit" color="primary">Edit expense</button>
+      </div>
+      <ng-template #addExp>
+        <button mat-button type="submit" color="primary">Add expense</button>
+    </ng-template>
     </mat-dialog-actions>
   </form>
 </div>

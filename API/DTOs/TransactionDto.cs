@@ -26,4 +26,10 @@ namespace API.DTOs
         public decimal Value { get; set; }
         public string typeTransaction { get; set; }
     }
+    public class PagedTrans{
+        public List<TransactionsGen> transactions { get; set; }
+        public Boolean hasMore { get; set; }
+        
+
+    }
 }

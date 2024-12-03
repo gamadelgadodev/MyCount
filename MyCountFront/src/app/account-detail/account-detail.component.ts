@@ -1,6 +1,6 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AccountService } from '../services/account.service';
 import { Account } from '../models/account.model';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,7 +11,7 @@ import { Transaction } from '../models/transaction.model';
 @Component({
   selector: 'app-account-detail',
   standalone: true,
-  imports: [CommonModule,NgIf],
+  imports: [CommonModule,NgIf,RouterLink],
   templateUrl: './account-detail.component.html',
   styleUrl: './account-detail.component.css'
 })
@@ -60,9 +60,9 @@ export class AccountDetailComponent {
     
   }
 
-  openExpenseDialog(): void {
+  openExpenseDialog(expenseData?: any): void {
     const dialogRef = this.dialog.open(ExpenseDialogComponent, {
-      data: { account: this.account } 
+      data: { account: this.account , expenseData: expenseData} 
     });
 
     dialogRef.afterClosed().subscribe(result => {

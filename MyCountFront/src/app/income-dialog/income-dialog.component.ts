@@ -41,7 +41,7 @@ export class IncomeDialogComponent {
   ) {
     this.account= data.account;
     this.incomeD = data.incomeData;
-    if(this.incomeD!==null) 
+    if(data.incomeData!==undefined) 
       this.edit = true;
 
     this.accountService.getActiveIncomeCats().subscribe((data: IncomeCat[]) => {
@@ -71,7 +71,7 @@ export class IncomeDialogComponent {
           console.error('Error adding income:', err);
         }
       });
-    }else
+    }if (this.incomeForm.valid && this.data.incomeData?.id!=null)
     {
       this.accountService.editIncome(this.incomeForm.value).subscribe({
         next: () => {

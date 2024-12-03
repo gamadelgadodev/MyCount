@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { AccountService } from '../services/account.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -24,7 +24,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatOptionModule,
     MatButtonModule,
     MatCheckboxModule,
-    CommonModule],
+    CommonModule,
+    NgIf],
   templateUrl: './expense-dialog.component.html',
   styleUrl: './expense-dialog.component.css'
 })
@@ -32,6 +33,8 @@ export class ExpenseDialogComponent {
   account: any;
   expenseForm: FormGroup;
   expenseCat: ExpenseCat[] = [];
+  expenseD: any;
+  edit : boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -40,24 +43,28 @@ export class ExpenseDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any 
   ) {
     this.account= data.account;
+    this.expenseD = data.expenseData;
+    if(data.expenseData!==undefined)
+      this.edit = true;
     this.accountService.getActiveExpenseCats().subscribe((data: ExpenseCat[]) => {
       this.expenseCat = data;
       console.log('Lista de categories:', this.expenseCat);
     });
     this.expenseForm = this.fb.group({
+      id: [data.expenseData?.id || ''],
       accountId: [data.account.id],
-      value: ['', [Validators.required, Validators.min(0)]],
-      description: ['', Validators.required],
-      nessesary: [false, Validators.required],
+      value: [data.expenseData?.value ||  '', [Validators.required, Validators.min(0)]],
+      description: [data.expenseData?.description || '', Validators.required],
+      nessesary: [data.expenseData?.nessesary || false, Validators.required],
       typeTransaction: ['expense'],
-      transactionCatId: []
+      transactionCatId: [data.expenseData?.transactionCatId || '']
     });
     console.log(this.account)
     console.log(data)
   }
   
   onSubmit(): void {
-    if (this.expenseForm.valid) {
+    if (this.expenseForm.valid && this.data.expenseData?.id==null) {
       this.accountService.addTrans(this.expenseForm.value).subscribe({
         next: () => {
           this.dialogRef.close(true);
@@ -66,6 +73,16 @@ export class ExpenseDialogComponent {
           console.error('Error adding expense:', err);
         }
       });
+    }if(this.expenseForm.valid && this.data.expenseData?.id!==null)
+    {
+        this.accountService.editExpense(this.expenseForm.value).subscribe({
+          next: () => {
+            this.dialogRef.close(true);
+          },
+          error: (err) =>{
+            console.error('Error editing expense:',err);
+          }
+        });
     }
   }
 
