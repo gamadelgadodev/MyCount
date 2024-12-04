@@ -19,6 +19,7 @@ export class TransactionListComponent {
   transactions: Transaction[] = [];
   page: number=1;
   hasMore: boolean=true;
+  firstPage: boolean=true;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,8 +34,6 @@ export class TransactionListComponent {
       this.page = +(params.get('page') ?? 1);
       this.loadAccount(id);
       this.loadTransactions(id, this.page);
-      if(this.transactions.length < 3)
-        this.hasMore = false;
       console.log(this.transactions);
     });
   }
@@ -57,12 +56,26 @@ export class TransactionListComponent {
       this.accountService.getAllTrans(accountId, page).subscribe(
         data => {
           this.transactions = data;
-
+          console.log("Loaded:",data,this.transactions.length,this.page)
+          if(this.transactions.length < 3 )
+          {
+              
+            this.hasMore = false;
+          }
+          else
+            this.hasMore = true;
+          if(this.page >1)
+          {
+            this.firstPage=false;console.log("hello");
+          }
+          else
+            this.firstPage = true;
         },
         error => {
           console.error('Error al cargar las transacciones:', error);
         }
       );
+      
     }
   }
 
