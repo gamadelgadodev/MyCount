@@ -6,17 +6,20 @@ import { AccountService } from '../services/account.service';
 import { MatDialog } from '@angular/material/dialog';
 import { IncomeDialogComponent } from '../income-dialog/income-dialog.component';
 import { ExpenseDialogComponent } from '../expense-dialog/expense-dialog.component';
+import { FilterTr } from '../models/filter-tr.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-transaction-list',
   standalone: true,
-  imports: [CommonModule,NgIf,RouterLink,NgIf],
+  imports: [CommonModule,NgIf,RouterLink,NgIf,FormsModule],
   templateUrl: './transaction-list.component.html',
   styleUrl: './transaction-list.component.css'
 })
 export class TransactionListComponent {
   account: any; 
   transactions: Transaction[] = [];
+  filter: FilterTr = {};
   page: number=1;
   hasMore: boolean=true;
   firstPage: boolean=true;
@@ -37,7 +40,21 @@ export class TransactionListComponent {
       console.log(this.transactions);
     });
   }
-
+  onReset(): void {
+    this.filter = {}; 
+    window.location.reload()
+  }
+  search(): void
+  {
+    this.page = 1;
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      const id = params.get('id');
+      this.page = +(params.get('page') ?? 1);
+      this.loadAccount(id);
+      this.loadTransactions(id, this.page);
+      console.log(this.transactions);
+    });
+  }
   loadAccount(id: string | null): void {
     if (id) {
       this.accountService.getAccountById(id).subscribe(
@@ -53,13 +70,12 @@ export class TransactionListComponent {
 
   loadTransactions(accountId: string | null, page: number): void {
     if (accountId) {
-      this.accountService.getAllTrans(accountId, page).subscribe(
+      this.accountService.getTransactions(accountId, page,this.filter).subscribe(
         data => {
           this.transactions = data;
           console.log("Loaded:",data,this.transactions.length,this.page)
-          if(this.transactions.length < 3 )
+          if(this.transactions.length < 5 )
           {
-              
             this.hasMore = false;
           }
           else
@@ -78,6 +94,7 @@ export class TransactionListComponent {
       
     }
   }
+
 
   openIncomeDialog(incomeData?: any): void {
     const dialogRef = this.dialog.open(IncomeDialogComponent, {

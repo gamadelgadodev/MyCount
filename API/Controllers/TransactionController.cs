@@ -33,13 +33,19 @@ namespace API.Controllers
         [HttpGet("Recent/{accountId}")]
         public async Task<ActionResult<List<TransactionsGen>>> getRecent(int accountId)
         {
-            var Transactions = await _tRepo.ListPage(1,10,accountId);
+            var Transactions = await _tRepo.ListPage(1,5,accountId);
             return Ok(Transactions);
         }
         [HttpGet("AllTrans/{accountId}/{page}")]
         public async Task<ActionResult<List<TransactionsGen>>> getPagedTrans(int accountId, int page)
         {
             var Transactions = await _tRepo.ListPage(page,3,accountId);
+            return Ok(Transactions);
+        }
+        [HttpPost("filteredTrans/{accountId}/{page}")]
+        public async Task<ActionResult<List<TransactionsGen>>> getFilteredTrans(int accountId, int page,[ FromBody]FilterTr? filter)
+        {
+            var Transactions = await _tRepo.ListByFilter(filter.Value,filter.Description,filter.Cat,filter.Date,filter.RangeDate,accountId,page);
             return Ok(Transactions);
         }
         [HttpPost]

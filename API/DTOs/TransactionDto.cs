@@ -32,4 +32,12 @@ namespace API.DTOs
         
 
     }
+    public class FilterTr
+    {
+        public decimal? Value { get; set; }
+        public string? Description { get; set; } 
+        public string? Cat { get; set; }
+        public DateTime? Date { get; set; }
+        public string? RangeDate { get; set;}
+    }
 }

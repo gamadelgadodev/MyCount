@@ -1,16 +1,53 @@
 <div class="container">
-    <div class="row">
-      <div class="col-md">
-        <div class="container-lg mt-4 text-lg-start text-sm-center">
-          <h2>{{ account.name }}</h2>
-        </div>
+  <div class="container-lg mt-4 text-lg-start text-sm-center">
+    <h2>{{ account.name }}</h2>
+    <h4>Filter Transactions</h4>
+  
+    <!-- Row for filters (horizontal) -->
+    <div class="row justify-content-center align-items-center">
+      <!-- Value filter -->
+      <div class="col-md-2 mb-2">
+        <label for="value" class="form-label">Value</label>
+        <input type="number" id="value" class="form-control" [(ngModel)]="filter.value" placeholder="Value">
       </div>
-      <div class="col-md d-flex justify-content-center align-items-center">
-          <div class="d-grid gap-2 col-6 align-middle">
-            <button class="btn btn-outline-success" type="button"(click)="openIncomeDialog()">search</button>
-        </div>
+  
+      <!-- Description filter -->
+      <div class="col-md-2 mb-2">
+        <label for="description" class="form-label">Description</label>
+        <input type="text" id="description" class="form-control" [(ngModel)]="filter.description" placeholder="Description">
+      </div>
+  
+      <!-- Category filter -->
+      <div class="col-md-2 mb-2">
+        <label for="cat" class="form-label">Category</label>
+        <input type="text" id="cat" class="form-control" [(ngModel)]="filter.cat" placeholder="Category">
+      </div>
+  
+      <!-- Exact Date filter -->
+      <div class="col-md-2 mb-2">
+        <label for="date" class="form-label">Date</label>
+        <input type="date" id="date" class="form-control" [(ngModel)]="filter.date">
+      </div>
+  
+      <!-- Date Range filter -->
+      <div class="col-md-2 mb-2">
+        <label for="rangeDate" class="form-label">Date Range</label>
+        <input type="text" id="rangeDate" class="form-control" [(ngModel)]="filter.rangeDate" placeholder="MM/DD/YYYY:MM/DD/YYYY">
+      </div>
+  
+      <!-- Search Button -->
+      <div class="col-md-2 d-flex justify-content-center align-items-center mb-2">
+        <button class="btn btn-primary m-1" (click)="search()">Search</button>
+        
+        <button class="btn btn-secondary" (click)="onReset()">Reset</button>
+      </div>
+  
+      <!-- Reset Button -->
+      <div class="col-md-2 d-flex justify-content-center align-items-center mb-2">
+        
       </div>
     </div>
+  </div>
     <ul class="list-group">
       <li 
     *ngFor="let transaction of transactions" 

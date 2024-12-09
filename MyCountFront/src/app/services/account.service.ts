@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
 import { Account } from '../models/account.model';
 import { IncomeCat } from '../models/income-cat.model';
 import { ExpenseCat } from '../models/expense-cat.model';
 import { Transaction } from '../models/transaction.model';
+import { FilterTr } from '../models/filter-tr.model';
 
 
 @Injectable({
@@ -47,6 +48,11 @@ export class AccountService {
   }
   getAllTrans(id: any,page: any): Observable<Transaction[]>{
     return this.http.get<Transaction[]>(`${this.apiUrl}Transaction/AllTrans/${id}/${page}`);
+  }
+  getTransactions(id: any, page: any, filter: FilterTr): Observable<any> {
+    // Construimos los parámetros de la consulta
+
+    return this.http.post(`${this.apiUrl}Transaction/filteredTrans/${id}/${page}`, filter);
   }
 
 

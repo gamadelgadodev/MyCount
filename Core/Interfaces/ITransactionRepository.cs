@@ -6,6 +6,7 @@ using Core.Entities;
 using Core.Specifications;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Core.Interfaces
 {
     public interface ITransactionRepository
@@ -15,5 +16,6 @@ namespace Core.Interfaces
         Task<Transaction> CreateTransB(Transaction tras);
         Task<Transaction> UpdateTrans(Transaction tras, decimal value);
         Task<Transaction> DelteTrans(int id);
+        Task<List<Transaction>> ListByFilter(decimal? Value,string? Description,string? Cat, DateTime? Date,string? RangeDate,int accountId,int page);
     }
 }
