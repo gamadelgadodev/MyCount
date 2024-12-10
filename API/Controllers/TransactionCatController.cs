@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using API.DTOs;
 using Core.Entities;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class TransactionCatController : ControllerBase
     {
@@ -19,6 +21,7 @@ namespace API.Controllers
         {
             _ecatRepo = ecatRepo;
         }
+
         [HttpGet("All")]
         //public async Task<ActionResult> GetProducts()
         public async Task<ActionResult<List<Transaction>>> GetAllCat()

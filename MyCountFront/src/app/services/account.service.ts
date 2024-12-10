@@ -13,6 +13,7 @@ import { FilterTr } from '../models/filter-tr.model';
 })
 export class AccountService {
   private apiUrl = 'http://localhost:5048/api/';
+  private tokenKey = 'authToken';
 
   constructor(private http: HttpClient) {}
 
@@ -54,6 +55,20 @@ export class AccountService {
 
     return this.http.post(`${this.apiUrl}Transaction/filteredTrans/${id}/${page}`, filter);
   }
+  login(credentials: { username: string; password: string }) {
+    return this.http.post<{ token: string }>(`${this.apiUrl}Auth`, credentials);
+  }
 
+  saveToken(token: string): void {
+    localStorage.setItem(this.tokenKey, token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  logout(): void {
+    localStorage.removeItem(this.tokenKey);
+  }
 
 }

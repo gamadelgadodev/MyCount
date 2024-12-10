@@ -2,6 +2,7 @@
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Validations;
@@ -9,6 +10,7 @@ using Microsoft.OpenApi.Validations;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class UserController : ControllerBase
     {
