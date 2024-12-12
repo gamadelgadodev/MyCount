@@ -14,5 +14,5 @@ export const routes: Routes = [
     {path: 'transaction-list/:id/:page', component: TransactionListComponent},
     {path: 'login', component: LoginComponent},
     // { path: 'login', loadChildren: () => import('').then(m => m.LoginModule) },
-    {path: '', redirectTo: '/account-list', pathMatch: 'full'},
+    {path: '', redirectTo: 'login', pathMatch: 'full'},
 ];

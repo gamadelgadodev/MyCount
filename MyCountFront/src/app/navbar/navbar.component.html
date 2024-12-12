@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-lg custom-navbar">
+<div *ngIf="show">
+  <nav class="navbar navbar-expand-lg custom-navbar" >
     <div class="container">
       <a class="navbar-brand mx-auto" href="#">MyApp</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,7 +14,7 @@
             <a class="nav-link rounded-link" routerLink="/expense-list" routerLinkActive="active">Expenses</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link rounded-link" routerLink="/income-list" routerLinkActive="active">Incomes</a>
+            <a class="nav-link rounded-link" routerLink="/login" routerLinkActive="active" (click)="endSession()">Logout</a>
           </li>
           <!-- <li class="nav-item">
             <a class="nav-link rounded-link" routerLink="/" routerLinkActive="active">Categories</a>
@@ -23,3 +24,4 @@
     </div>
   </nav>
   
+</div>

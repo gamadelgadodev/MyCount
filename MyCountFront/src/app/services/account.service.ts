@@ -64,6 +64,7 @@ export class AccountService {
   }
 
   getToken(): string | null {
+    console.log(this.tokenKey);
     return localStorage.getItem(this.tokenKey);
   }
 

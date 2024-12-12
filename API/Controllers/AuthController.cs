@@ -59,7 +59,7 @@ namespace API.Controllers
                     var token = tokenHandler.CreateToken(tokenDescriptor);
                     var jwtToken = tokenHandler.WriteToken(token);
                     var result = new { token = jwtToken };
-                    return Ok(jwtToken);
+                    return Ok(result);
                 }
             }
             return response;
