@@ -5,6 +5,7 @@ import { ExpenseListComponent } from './expense-list/expense-list.component';
 import { IncomeListComponent } from './income-list/income-list.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 import { LoginComponent } from './login/login.component';
+import { FinancesChartsComponent } from './finances-charts/finances-charts.component';
 
 export const routes: Routes = [
     {path: 'account-list', component: AccountListComponent},
@@ -13,6 +14,7 @@ export const routes: Routes = [
     {path: 'income-list', component: IncomeListComponent},
     {path: 'transaction-list/:id/:page', component: TransactionListComponent},
     {path: 'login', component: LoginComponent},
+    {path: 'charts', component: FinancesChartsComponent},
     // { path: 'login', loadChildren: () => import('').then(m => m.LoginModule) },
     {path: '', redirectTo: 'login', pathMatch: 'full'},
 ];

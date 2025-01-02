@@ -15,7 +15,14 @@ namespace Infrastructure.Data
         {
             _context = context;
         }
-        public async Task<Boolean> GetUser(string UserName, string Password)
+
+        public async Task<User> GetByUsername(string UserName,string Password)
+        {
+            var result = await _context.Users.Where(x=>x.UserName.Equals(UserName) && x.Password.Equals(Password)).FirstOrDefaultAsync();
+            return result;
+        }
+
+        public async Task<Boolean> TrustUser(string UserName, string Password)
         {
             var result = await _context.Users.AnyAsync(x=>x.UserName.Equals(UserName) && x.Password.Equals(Password));
             return result;

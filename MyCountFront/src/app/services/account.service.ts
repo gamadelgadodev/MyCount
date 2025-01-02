@@ -6,6 +6,8 @@ import { IncomeCat } from '../models/income-cat.model';
 import { ExpenseCat } from '../models/expense-cat.model';
 import { Transaction } from '../models/transaction.model';
 import { FilterTr } from '../models/filter-tr.model';
+import { jwtDecode }  from 'jwt-decode';
+import { JwtPayloadModel } from '../models/jwt-payload.model';
 
 
 @Injectable({
@@ -71,5 +73,29 @@ export class AccountService {
   logout(): void {
     localStorage.removeItem(this.tokenKey);
   }
+  getUserId(): string | null {
+    const decodedToken = this.getDecodedToken();
+    return decodedToken ? decodedToken.id : null;
+  }
+  getChartData(accountId: number, startDate: string, endDate: string): Observable<any> {
+    const params = {
+      accountId: accountId.toString(),
+      startDate: startDate,
+      endDate: endDate
+    };
 
+    return this.http.get<any>(`${this.apiUrl}Finance/All`, { params });
+  }
+
+  getDecodedToken(): JwtPayloadModel | null {
+    const token = localStorage.getItem(this.tokenKey); // Asegúrate de guardar el token en `localStorage`
+    if (!token) return null;
+
+    try {
+      return jwtDecode<JwtPayloadModel>(token);
+    } catch (error) {
+      console.error('Error decoding token', error);
+      return null;
+    }
+  }
 }

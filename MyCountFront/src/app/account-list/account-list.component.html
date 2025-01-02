@@ -1,5 +1,15 @@
 <div class="container mt-4">
-  <h2>Active Accounts</h2>
+  <div class="row">
+    <div class="col-md">
+      <h2>Active Accounts</h2>
+    </div>
+  <div class="col-md d-flex justify-content-center align-items-center">
+    <div class="d-grid gap-2 col-6 align-middle">
+      <button class="btn btn-outline-success" type="button">Create Account</button>
+  </div>
+  </div>
+  
+</div>
   <ul class="list-group">
     <!-- Recorre todas las cuentas en el array usando *ngFor -->
     <li *ngFor="let account of accounts" class="list-group-item">

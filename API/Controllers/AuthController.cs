@@ -32,8 +32,9 @@ namespace API.Controllers
             IActionResult response = Unauthorized();
             if (user != null)
             {
-                if (await _userARepo.GetUser(user.UserName, user.Password))
+                if (await _userARepo.TrustUser(user.UserName, user.Password))
                 {
+                    var userV = await _userARepo.GetByUsername(user.UserName, user.Password);
                     var issuer = configuration["Jwt:Issuer"];
                     var audience = configuration["Jwt:Audience"];
                     var key = Encoding.UTF8.GetBytes(configuration["Jwt:Key"]);
@@ -43,8 +44,8 @@ namespace API.Controllers
                     );
                     var subject = new ClaimsIdentity(new[]
                     {
-                        new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-                        new Claim(JwtRegisteredClaimNames.Email, user.UserName),
+                        new Claim("username", user.UserName),
+                        new Claim("id", userV.Id.ToString()),
                     });
                     var expires = DateTime.UtcNow.AddMinutes(10);
                     var tokenDescriptor = new SecurityTokenDescriptor

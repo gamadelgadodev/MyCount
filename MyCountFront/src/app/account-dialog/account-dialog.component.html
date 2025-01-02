@@ -1,0 +1,63 @@
+
+<div *ngIf="edit; else addIncoD">
+    <h1 mat-dialog-title>Edit Expense in {{account.name}}</h1>
+  </div>
+  <ng-template #addIncoD>
+    <h1 mat-dialog-title>Add Expense to {{account.name}}</h1>
+  </ng-template>
+  <div mat-dialog-content>
+    <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        
+        <mat-form-field appearance="fill" style="width: 100%;" hidden>
+          <mat-label>Account ID</mat-label>
+          <input matInput formControlName="accountId" required readonly>
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill" style="width: 100%;">
+          <mat-label>Value</mat-label>
+          <input matInput formControlName="value" required type="number">
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" style="width: 100%;">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description" required>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" style="width: 100%;">
+          <mat-label>Income Category</mat-label>
+          <mat-select formControlName="transactionCatId" required>
+            <mat-option *ngFor="let category of expenseCat" [value]="category.id">
+              {{ category.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field>
+          <input hidden=true matInput>
+          <mat-checkbox matInput formControlName="nessesary">Necessary</mat-checkbox>
+        </mat-form-field>
+  
+        <!-- <mat-form-field appearance="fill" style="width: 100%;">
+          <select id='peeps' name='people' [(ngModel)]="peepsSelect">
+            <option *ngFor="let item of data" [value]="item.name">
+              {{item.name}}
+            </option>    
+        </select>
+        </mat-form-field> -->
+       
+  
+      </div>
+      
+      <mat-dialog-actions style="margin-top: 16px;">
+        <button mat-button (click)="onCancel()">Cancel</button>
+        <div *ngIf="edit; else addExp">
+          <button mat-button type="submit" color="primary">Edit expense</button>
+        </div>
+        <ng-template #addExp>
+          <button mat-button type="submit" color="primary">Add expense</button>
+      </ng-template>
+      </mat-dialog-actions>
+    </form>
+  </div>
+  
