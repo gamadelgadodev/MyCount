@@ -21,25 +21,23 @@ namespace API.Controllers
             _finaRepo = finaRepo;
         }
 
-        [HttpGet("All")]
-         public async Task<ActionResult> GetFinances()
+        [HttpPost("All")]
+        public async Task<ActionResult> GetFinances([FromBody] FinanceRequest request)
         {
-            // List<string> labels = new List<string>();
-            // List<int> data = new List<int>();
-            // List<string> backgroundColor = new List<string>();
-            // List<int> ind = new List<int>();
-            var transactions = await _finaRepo.ListAcc(1,DateTime.Today.AddDays(-60),DateTime.Today);
+            var transactions = await _finaRepo.ListAcc(request.Acc,DateTime.Parse(request.StartDate),DateTime.Parse(request.EndDate));
               var groupedTransactions = transactions
             .GroupBy(t => t.TransactionCat)
-            .OrderBy(g => g.Key.Name) // Asegura que el orden sea consistente
+            .OrderBy(g => g.Key.Name) 
             .ToList();
 
-             var labels = groupedTransactions.Select(g => g.Key.Name).ToList();
+            var labels = groupedTransactions.Select(g => g.Key.Name).ToList();
+            var type = groupedTransactions.Select(g=> g.Key.typeCat).ToList();
             var datas = groupedTransactions.Select(g => g.Sum(t => t.Value)).ToList();
-             var colors = groupedTransactions.Select(g => g.Key.Color).ToList();
+            var colors = groupedTransactions.Select(g => g.Key.Color).ToList();
 
             var data = new{
                 labels = labels,
+                types = type,
             datasets = new[]
             {
                 new
@@ -51,17 +49,6 @@ namespace API.Controllers
                 }
             }
             };
-            // var cat = await _ecatRepo.ListAllAsync();
-            // foreach(Transaction x in Transactions)
-            // {
-            //     if(ind.Contains(x.TransactionCatId))
-            //     {
-                    
-            //     }
-            //     else{
-
-            //     }
-            // }
             return Ok(data);
         }
     }

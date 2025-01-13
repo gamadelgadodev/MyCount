@@ -1,3 +1,89 @@
 <div class="chart-container">
-    <canvas  id="MyChart" >{{ chart }}</canvas>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Select Account and Date Range</h2>
+        <form id="accountForm" (ngSubmit)="onSubmit()" #accountForm="ngForm">
+            <div class="row">
+              <!-- Select Account -->
+              <div class="col-md-4 mb-3">
+                <label for="accountSelect" class="form-label">Select Account</label>
+                <select
+                  class="form-select"
+                  id="accountSelect"
+                  [(ngModel)]="selectedAccountId"
+                  name="account"
+                  required
+                >
+                  <option value="" disabled selected>Select an account</option>
+                  <option *ngFor="let account of accounts" [value]="account.id">
+                    {{ account.name }}
+                  </option>
+                </select>
+              </div>
+          
+              <!-- Start Date -->
+              <div class="col-md-4 mb-3">
+                <label for="startDate" class="form-label">Start Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="startDate"
+                  [(ngModel)]="startDate"
+                  name="startDate"
+                  required
+                />
+              </div>
+          
+              <!-- End Date -->
+              <div class="col-md-4 mb-3">
+                <label for="endDate" class="form-label">End Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="endDate"
+                  [(ngModel)]="endDate"
+                  name="endDate"
+                  required
+                />
+              </div>
+            </div>
+          
+            <!-- Submit Button -->
+            <div class="text-center">
+            <button type="submit" class="btn btn-primary" [disabled]="accountForm.invalid">
+              Submit
+            </button>
+            </div>
+          </form>
+      </div>
+
+      <div class="container">
+       
+        <div class="col-4">
+                <div class="" *ngIf="chartData && chartData.labels.length > 0">
+                    <div class="mt-4">
+                        <h4>Values</h4>
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>Category</th>
+                              <th>Type</th>
+                              <th>Value</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let label of chartData.labels; let i = index">
+                              <td>{{ label }}</td>
+                              <td>{{ chartData.types[i] }}</td>
+                              <td>{{ chartData.datasets[0].data[i] | number:'1.2-2' }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+      </div>
+      <div class="">
+        <canvas  id="MyChart" >{{ chart }}</canvas>
+    </div>
+   
 </div>

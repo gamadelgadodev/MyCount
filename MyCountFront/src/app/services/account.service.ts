@@ -8,12 +8,14 @@ import { Transaction } from '../models/transaction.model';
 import { FilterTr } from '../models/filter-tr.model';
 import { jwtDecode }  from 'jwt-decode';
 import { JwtPayloadModel } from '../models/jwt-payload.model';
+import { Category } from '../models/category.model';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
+ 
   private apiUrl = 'http://localhost:5048/api/';
   private tokenKey = 'authToken';
 
@@ -78,13 +80,27 @@ export class AccountService {
     return decodedToken ? decodedToken.id : null;
   }
   getChartData(accountId: number, startDate: string, endDate: string): Observable<any> {
-    const params = {
-      accountId: accountId.toString(),
+    const body = {
+      acc: accountId,
       startDate: startDate,
       endDate: endDate
     };
+  
+    return this.http.post<any>(`${this.apiUrl}Finance/All`, body);
+  }
 
-    return this.http.get<any>(`${this.apiUrl}Finance/All`, { params });
+  getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.apiUrl}TransactionCat/All`);
+  }
+
+  // Crear una nueva categoría
+  createCategory(category: Category): Observable<Category> {
+    return this.http.post<Category>(`${this.apiUrl}TransactionCat`, category);
+  }
+
+  // Editar una categoría existente
+  editCategory(category: Category): Observable<Category> {
+    return this.http.put<Category>(`${this.apiUrl}TransactionCat`, category);
   }
 
   getDecodedToken(): JwtPayloadModel | null {

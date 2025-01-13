@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Controllers
 {
     [ApiController]
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     public class TransactionCatController : ControllerBase
     {
@@ -60,7 +60,8 @@ namespace API.Controllers
                 Name = newExCat.Name,
                 Description = newExCat.Description,
                 Color = newExCat.Color,
-                IsDeleted = false
+                IsDeleted = false,
+                typeCat = "expense"
             };
             var createExp = await _ecatRepo.AddNewEntity(exp);
             return Ok(createExp);

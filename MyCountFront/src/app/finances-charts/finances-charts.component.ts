@@ -1,24 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { AccountService } from '../services/account.service';
+import { Account } from '../models/account.model';
+import { CommonModule, NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-finances-charts',
   standalone: true,
-  imports: [],
+  imports: [NgFor,FormsModule,CommonModule],
   templateUrl: './finances-charts.component.html',
   styleUrl: './finances-charts.component.css'
 })
 export class FinancesChartsComponent  implements OnInit {
-
+  accounts: Account[] = [];
+  selectedAccountId: number | null = null;
+  startDate: string = '';
+  endDate: string = '';
   chartData: any;
+accountForm: any;
   constructor(private accountService: AccountService ) {
     
   }
 
   public chart: any;
   createChart(){
-
+    if (this.chart) {
+      this.chart.destroy();
+    }
     this.chart = new Chart("MyChart", {
     type: 'doughnut', //this denotes tha type of chart
 
@@ -38,13 +47,30 @@ export class FinancesChartsComponent  implements OnInit {
     });
   }
   ngOnInit(): void {
-    const accountId = 1;
-    const startDate = '2024-01-01';
-    const endDate = '2024-12-31';
-
-    this.accountService.getChartData(accountId, startDate, endDate).subscribe(data => {
-      this.chartData = data;
-      this.createChart();
+    const userId = this.accountService.getUserId();
+    this.accountService.getAccountsByUser(userId).subscribe((data: Account[]) => { //hadrcodeed user id 
+      this.accounts = data;
+      console.log('Lista de cuentas:', this.accounts,userId);
     });
+  }
+  onSubmit(): void {
+    if (this.selectedAccountId && this.startDate && this.endDate) {
+      this.accountService.getChartData(this.selectedAccountId, this.startDate, this.endDate).subscribe(
+        (data) => {
+          this.chartData = data;
+          console.log('Datos del gráfico:', this.chartData);
+          this.createChart();
+        },
+        (error) => {
+          console.error('Error al cargar los datos del gráfico:', error);
+        }
+      );
+    } else {
+      console.error('Faltan campos por completar.');
+    }
+  }
+  onAccountChange(event: any) {
+    this.selectedAccountId = +event.target.value; // Convierte el valor a número
+    console.log('Cuenta seleccionada:', this.selectedAccountId);
   }
 }
