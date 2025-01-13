@@ -61,7 +61,7 @@ namespace API.Controllers
                 Description = newExCat.Description,
                 Color = newExCat.Color,
                 IsDeleted = false,
-                typeCat = "expense"
+                typeCat = newExCat.typeCat,
             };
             var createExp = await _ecatRepo.AddNewEntity(exp);
             return Ok(createExp);
@@ -74,6 +74,7 @@ namespace API.Controllers
             exCatOld.Name = exCat.Name;
             exCatOld.Description = exCat.Description;
             exCatOld.Color = exCat.Color;
+            exCatOld.typeCat = exCat.typeCat;
             var updateEx = await _ecatRepo.UpdateEntity(exCatOld);
             return Ok(updateEx);
         }

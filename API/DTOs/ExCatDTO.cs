@@ -10,6 +10,7 @@ namespace API.DTOs
         public string Name { get; set; }
         public string Description { get; set; }
         public string Color { get; set; }
+        public string typeCat { get; set; }
     }
      public class UpExCat
     {
@@ -17,5 +18,6 @@ namespace API.DTOs
         public string Name { get; set; }
         public string Description { get; set; }
         public string Color { get; set; }
+        public string typeCat { get; set; }
     }
 }

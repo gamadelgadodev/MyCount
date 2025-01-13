@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // Asegúrate de importar FormsModule
 import { AccountService } from '../services/account.service'; // Asegúrate de importar el servicio
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-category-management',
   standalone: true,
-  imports: [FormsModule,NgIf,NgFor], // Importar FormsModule aquí para usar ngModel
+  imports: [FormsModule,NgIf,NgFor,CommonModule], // Importar FormsModule aquí para usar ngModel
   templateUrl: './category-management.component.html',
   styleUrls: ['./category-management.component.css']
 })
 export class CategoryManagementComponent {
-  selectedCategory: any = { id: 0, name: '', description: '', color: '', typeCat: 'income', isDeleted: false };
+  selectedCategory: any = { id: 0, name: '', description: '', color: '', typeCat: '', isDeleted: false };
   categories: any[] = [];
 
   constructor(private accountService: AccountService) {
@@ -24,11 +24,13 @@ export class CategoryManagementComponent {
       // Crear nueva categoría
       this.accountService.createCategory(this.selectedCategory).subscribe(() => {
         this.loadCategories();
+        this.resetForm();
       });
     } else {
       // Actualizar categoría existente
       this.accountService.editCategory(this.selectedCategory).subscribe(() => {
         this.loadCategories();
+        this.resetForm();
       });
     }
   }
@@ -46,7 +48,15 @@ export class CategoryManagementComponent {
       this.categories = data;
     });
   }
-
+  resetForm() {
+    this.selectedCategory = {
+      id: 0,
+      name: '',
+      description: '',
+      color: '',
+      typeCat: '' // Reiniciar a cadena vacía
+    };
+  }
   // Función para editar una categoría existente
   editCategory(category: any) {
     this.selectedCategory = { ...category }; // Copiar los valores para editarlos
